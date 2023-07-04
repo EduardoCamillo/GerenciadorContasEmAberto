@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "810906110156",
+    "project_id": "projeto-firebase-a302a",
+    "storage_bucket": "projeto-firebase-a302a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810906110156:android:5f275d7eb3058f67bf1a69",
+        "android_client_info": {
+          "package_name": "com.example.loginproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810906110156-ensh7cmrqcff6ncmp38akgvnk38c60p4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCLiwueXftb8yOfyf2Q5WoBf62VTplUNU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "810906110156-ensh7cmrqcff6ncmp38akgvnk38c60p4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
