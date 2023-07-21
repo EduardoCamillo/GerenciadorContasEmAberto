@@ -24,24 +24,19 @@ public class FormLogin extends AppCompatActivity{// implements View.OnClickListe
 
     private static final String ARQUIVO_PREFERENCIA = "ArquivoPreferencia";
     public ViewHolder mViewHolder = new ViewHolder();
-    private TextView mostrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_login);
-
-        mostrar = findViewById(R.id.mostraTxt);
         this.mViewHolder.edit_email = findViewById(R.id.edit_email);
         this.mViewHolder.edit_senha = findViewById(R.id.edit_senha);
         this.mViewHolder.botaum = findViewById(R.id.botaum);
         this.mViewHolder.botaum2 = findViewById(R.id.botaum2);
-        //this.mViewHolder.botaum.setOnClickListener(this);
-        //this.mViewHolder.botaum2.setOnClickListener(this);
-        // Button botao = findViewById(R.id.botaum);
+
 
         mViewHolder.botaum.setOnClickListener(v -> {
-            //Toast.makeText(this, "Deu certo mlk", Toast.LENGTH_LONG).show()
+
 
             String email = this.mViewHolder.edit_email.getText().toString();
             String password = this.mViewHolder.edit_senha.getText().toString();
@@ -84,46 +79,8 @@ public class FormLogin extends AppCompatActivity{// implements View.OnClickListe
             startActivity(new Intent(this, RegisterActivity.class));
 
 
-
-
-
-
-
         });
     }
-
-   /* @Override
-    public void onClick(View view) {
-
-        if (view.getId() == R.id.botaum) {
-            //Toast.makeText(getApplicationContext(),"Teste texto",Toast.LENGTH_LONG).show();
-            String email = this.mViewHolder.edit_email.getText().toString();
-            String password = this.mViewHolder.edit_senha.getText().toString();
-            SharedPreferences preferences = getSharedPreferences(ARQUIVO_PREFERENCIA,0 );
-
-            if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-
-                Toast.makeText(getApplicationContext(), "Insira um email ou senha!", Toast.LENGTH_LONG).show();
-
-            }else{
-
-
-                SharedPreferences.Editor editor = preferences.edit();
-
-
-            }
-
-            SharedPreferences preferences = getSharedPreferences(ARQUIVO_PREFERENCIA,0 );
-
-
-
-        }else if(view.getId() == R.id.botaum2) {
-            startActivity(new Intent(this, RegisterActivity.class));
-        }
-
-
-
-    }*/
 
     private static class ViewHolder {
         Button botaum2;
