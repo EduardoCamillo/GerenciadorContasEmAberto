@@ -14,21 +14,23 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
-    private Button btn_press;
+    private  List<Localidade> localidadeList = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btn_press = findViewById(R.id.botao);
 
+    }
 
-       btn_press.setOnClickListener(v -> {
-          startActivity(new Intent(this, AddActivity.class));
-       });
+    private void carregaLista(){
 
     }
 }

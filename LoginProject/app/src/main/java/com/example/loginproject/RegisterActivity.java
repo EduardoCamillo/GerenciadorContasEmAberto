@@ -38,8 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
             String emailE = edit_email.getText().toString();
             String senhaP = edit_senha.getText().toString();
 
-            if (emailE.equals("") && senhaP.equals("")) {
-                Toast.makeText(getApplicationContext(), "INSIRA UM E-MAIL OU SENHA", Toast.LENGTH_LONG).show();
+            if (emailE.equals("") || senhaP.equals("")) {
+                Toast.makeText(getApplicationContext(), "INSIRA UM E-MAIL E SENHA", Toast.LENGTH_LONG).show();
             } else {
                 try {
 

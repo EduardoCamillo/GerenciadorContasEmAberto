@@ -45,7 +45,7 @@ public class FormLogin extends AppCompatActivity{// implements View.OnClickListe
             SQLiteDatabase db = openOrCreateDatabase("USERS", MODE_PRIVATE, null);;
 
             if(email.equals("") || password.equals("")){
-                Toast.makeText(getApplicationContext(), "Insira um email ou senha!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Insira um email ou senha!", Toast.LENGTH_SHORT).show();
             }else{
                /* editor.putString("email", email);
                 //commit salva
