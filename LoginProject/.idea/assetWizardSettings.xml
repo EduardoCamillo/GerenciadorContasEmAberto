@@ -28,6 +28,7 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="color" value="d01d1d" />
                             <entry key="outputName" value="ic_delete" />
                           </map>
                         </option>

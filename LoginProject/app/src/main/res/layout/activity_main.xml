@@ -7,11 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
+    <com.tsuryo.swipeablerv.SwipeableRecyclerView
+        android:id="@+id/rvLocalidades"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/item_localidades"
+        app:leftBgColor="@color/purple_500"
+        app:leftImage="@drawable/ic_delete"
         app:layout_constraintEnd_toEndOf="parent"
         tools:itemCount="11"
         app:layout_constraintStart_toStartOf="parent"

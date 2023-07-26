@@ -12,9 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 public class AdapterLocalidade extends RecyclerView.Adapter<AdapterLocalidade.MyViewHolder> {
 
     private List<Localidade> localidadeList;
+    private OnClick onClick;
 
-    public AdapterLocalidade(List<Localidade> localidadeList) {
+
+    public AdapterLocalidade(List<Localidade> localidadeList, OnClick onClick) {
         this.localidadeList = localidadeList;
+        this.onClick = onClick;
     }
 
     @NonNull
@@ -32,6 +35,8 @@ public class AdapterLocalidade extends RecyclerView.Adapter<AdapterLocalidade.My
         Localidade localidade = localidadeList.get(position);
 
         holder.nome_localidade.setText(localidade.getNome_localidade());
+
+        holder.itemView.setOnClickListener(v -> {onClick.OnClickListener(localidade);});
     }
 
     @Override
@@ -39,6 +44,11 @@ public class AdapterLocalidade extends RecyclerView.Adapter<AdapterLocalidade.My
         //retornar a quantidade de localidades que temos na lista
         return localidadeList.size();
     }
+    public interface OnClick{
+        void OnClickListener(Localidade localidade);
+    }
+
+
 
     static class MyViewHolder extends RecyclerView.ViewHolder{
         //declarar os componentes que irão conter no layout (neste caso é apenas um TextView)
