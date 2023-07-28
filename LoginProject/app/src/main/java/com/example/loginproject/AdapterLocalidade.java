@@ -44,6 +44,10 @@ public class AdapterLocalidade extends RecyclerView.Adapter<AdapterLocalidade.My
         //retornar a quantidade de localidades que temos na lista
         return localidadeList.size();
     }
+
+    public void notifyItemRangeRemoved(int position) {
+    }
+
     public interface OnClick{
         void OnClickListener(Localidade localidade);
     }
