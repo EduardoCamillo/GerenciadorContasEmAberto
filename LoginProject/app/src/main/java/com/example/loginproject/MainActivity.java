@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements AdapterLocalidade
         int idMenu = item.getItemId();
 
         if(idMenu == R.id.menu_add){
-            Toast.makeText(this,"Adicionar", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, FromLocalidadeActivity.class));
         }
 
         return true;
