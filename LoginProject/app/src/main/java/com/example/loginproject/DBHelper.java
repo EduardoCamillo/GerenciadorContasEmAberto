@@ -10,37 +10,30 @@ import androidx.annotation.Nullable;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    private static final int VERSAO = 2;
+    private static final int VERSAO = 1;
     private static final String NOME_DB = "DB_APP";
-    private static final String TB_USERS = "USERS";
+    public static final String TB_LOCALIDADE = "TB_LOCALIDADE";
 
     public DBHelper(Context context) {
         super(context, NOME_DB, null, VERSAO);
     }
 
-    /*public void insertData (String email, String senha){
-        SQLiteDatabase sql = null;
-        sql.execSQL("INSERT INTO TB_USERS VALUES('email', 'senha');");
-    }
-*/
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String sql = "CREATE TABLE IF NOT EXISTS " + TB_USERS
-                + "(email VARCHAR(200) NOT NULL, " +
-                "senha VARCHAR(200) NOT NULL); ";
+        //EXECUTADO SEMPRE QUANDO O APP FOR CRIAR O BANCO DE DADOS PELA PRIMEIRA VEZ
+        String sql = "CREATE TABLE IF NOT EXISTS " + TB_LOCALIDADE
+                + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                " localidade TEXT NOT NULL); ";
 
-        try{
+        try {
             sqLiteDatabase.execSQL(sql);
-            Log.d("CEPA FOI", "foi mesmo mlk");
-
-        }catch (Exception e){
-            Log.d("ERROR", "Erro ao criar a tabela: " + e.getMessage());
+        }catch(Exception e){
+            Log.i("ERRADO", "Deu ruim ao criar a tabela duzao");
         }
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        //EXECUTADO SEMPRE QUANDO ATUALIZARMOS A VERSÃO DO BANCO DE DADOS
     }
 }
