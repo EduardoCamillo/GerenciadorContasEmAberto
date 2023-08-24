@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -31,13 +31,16 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements AdapterLocalidade.OnClick {
 
     private AdapterLocalidade adapterLocalidade;
-    private  List<Localidade> localidadeList = new ArrayList<>();
     private SwipeableRecyclerView rvLocalidades;
+    private SQLiteDatabase db;
+    private LocalidadeDAO localidadeDAO;
 
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        localidadeDAO = new LocalidadeDAO(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Localidades");
@@ -46,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements AdapterLocalidade
 
         rvLocalidades = findViewById(R.id.rvLocalidades);
 
-        carregaLista();
 
         configRecyclerView();
 
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements AdapterLocalidade
         rvLocalidades.setHasFixedSize(true);
 
         //declarando adapter
-        adapterLocalidade = new AdapterLocalidade(localidadeList, this);
+        adapterLocalidade = new AdapterLocalidade(localidadeDAO.getListLocalidade(), this);
         rvLocalidades.setAdapter(adapterLocalidade);
 
         rvLocalidades.setListener(new SwipeLeftRightCallback.Listener() {
@@ -68,40 +70,21 @@ public class MainActivity extends AppCompatActivity implements AdapterLocalidade
 
             @Override
             public void onSwipedRight(int position) {
-                localidadeList.remove(position);
-
+                localidadeDAO.getListLocalidade().remove(position);
                 //excluindo o item do adapter
                 adapterLocalidade.notifyItemRemoved(position);
             }
         });
     }
 
-    private void carregaLista(){
-        Localidade localidade1 = new Localidade();
-        localidade1.setNome_localidade("DROGASIL");
 
-        Localidade localidade2 = new Localidade();
-        localidade2.setNome_localidade("DROGA RAIA");
-
-        Localidade localidade3 = new Localidade();
-        localidade3.setNome_localidade("DROGARIA SAOPAULO");
-
-        Localidade localidade4 = new Localidade();
-        localidade4.setNome_localidade("FARMAIS");
-
-        Localidade localidade5 = new Localidade();
-        localidade5.setNome_localidade("PAGUE MENOS");
-
-        localidadeList.add(localidade1);
-        localidadeList.add(localidade2);
-        localidadeList.add(localidade3);
-        localidadeList.add(localidade4);
-        localidadeList.add(localidade5);
-    }
 
     @Override
     public void OnClickListener(Localidade localidade) {
-        Toast.makeText(this, localidade.getNome_localidade() + "Opa", Toast.LENGTH_SHORT).show();
+        //Intent intent = new Intent(this, FromLocalidadeActivity.class);
+        Toast.makeText(getApplicationContext(), "Selecionado: " + localidade.getNome_localidade(),Toast.LENGTH_SHORT).show();
+        //intent.putExtra("localidade", localidade);
+        //startActivity(intent);
     }
 
     @Override
