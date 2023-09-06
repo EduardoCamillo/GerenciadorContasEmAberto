@@ -1,4 +1,4 @@
-package com.example.loginproject;
+package com.example.loginproject.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

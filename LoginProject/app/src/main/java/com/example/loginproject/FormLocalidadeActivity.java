@@ -1,15 +1,19 @@
 package com.example.loginproject;
 
+import androidx.activity.result.ActivityResult;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class FromLocalidadeActivity extends AppCompatActivity {
+import com.example.loginproject.database.LocalidadeDAO;
+import com.example.loginproject.database.model.Localidade;
+
+public class FormLocalidadeActivity extends AppCompatActivity {
     private EditText nome_localidade;
     private Button botao_salvar;
     private SQLiteDatabase db;
@@ -49,8 +53,9 @@ public class FromLocalidadeActivity extends AppCompatActivity {
         if(!localidade.isEmpty()){
             Localidade localidade1 = new Localidade();
             localidade1.setNome_localidade(localidade);
-            localidadeDAO.SalvarLocalidade(localidade1);
+            localidadeDAO.salvarLocalidade(localidade1);
 
+            setResult(Activity.RESULT_OK);
             finish();
         }else{
             nome_localidade.requestFocus();

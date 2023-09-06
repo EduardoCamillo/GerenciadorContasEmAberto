@@ -9,6 +9,8 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.loginproject.database.model.Localidade;
+
 public class AdapterLocalidade extends RecyclerView.Adapter<AdapterLocalidade.MyViewHolder> {
 
     private List<Localidade> localidadeList;
@@ -18,6 +20,10 @@ public class AdapterLocalidade extends RecyclerView.Adapter<AdapterLocalidade.My
     public AdapterLocalidade(List<Localidade> localidadeList, OnClick onClick) {
         this.localidadeList = localidadeList;
         this.onClick = onClick;
+    }
+
+    public void setLocalidadeList(List<Localidade> localidadeList){
+        this.localidadeList = localidadeList;
     }
 
     @NonNull
@@ -35,8 +41,13 @@ public class AdapterLocalidade extends RecyclerView.Adapter<AdapterLocalidade.My
         Localidade localidade = localidadeList.get(position);
 
         holder.nome_localidade.setText(localidade.getNome_localidade());
+        holder.nome_localidade.setTag(localidade.getId());
 
-        holder.itemView.setOnClickListener(v -> {onClick.OnClickListener(localidade);});
+        holder.itemView.setOnLongClickListener(view -> {
+            onClick.onDeleteItem(localidade.getId());
+            return true;
+        });
+        holder.itemView.setOnClickListener(v -> onClick.onItemClicked(localidade));
     }
 
     @Override
@@ -49,7 +60,9 @@ public class AdapterLocalidade extends RecyclerView.Adapter<AdapterLocalidade.My
     }
 
     public interface OnClick{
-        void OnClickListener(Localidade localidade);
+        void onDeleteItem(int id);
+        void onAddItem(int id);
+        void onItemClicked(Localidade localidade);
     }
 
 

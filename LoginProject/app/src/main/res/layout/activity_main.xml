@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#76C3CA"
+    android:background="#FFFFFF"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
@@ -31,7 +31,19 @@
         app:rightBgColor="@color/blue"
         app:rightImage="@drawable/ic_edit"
         tools:itemCount="11"
+        android:visibility="gone"
         tools:listitem="@layout/item_localidades" />
 
+    <LinearLayout
+        android:id="@+id/media_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:orientation="vertical">
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

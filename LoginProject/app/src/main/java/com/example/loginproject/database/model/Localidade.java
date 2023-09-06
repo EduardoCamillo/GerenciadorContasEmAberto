@@ -1,4 +1,4 @@
-package com.example.loginproject;
+package com.example.loginproject.database.model;
 
 import java.io.Serializable;
 

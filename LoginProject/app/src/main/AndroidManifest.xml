@@ -10,10 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginProject">
         <activity
-            android:name=".FromLocalidadeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AddActivity"
+            android:name=".FormLocalidadeActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"

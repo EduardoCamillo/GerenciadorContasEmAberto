@@ -1,39 +1,45 @@
 package com.example.loginproject;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.loginproject.database.LocalidadeDAO;
+import com.example.loginproject.database.model.Localidade;
 import com.tsuryo.swipeablerv.SwipeLeftRightCallback;
 import com.tsuryo.swipeablerv.SwipeableRecyclerView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterLocalidade.OnClick {
 
     private AdapterLocalidade adapterLocalidade;
+    private AdapterLocalidade adapterLocalidade2;
+    private LinearLayout media_list;
+
     private SwipeableRecyclerView rvLocalidades;
     private SQLiteDatabase db;
     private LocalidadeDAO localidadeDAO;
+
+    ActivityResultLauncher<Intent> someActivityResultLauncher;
 
 
     @Override protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +54,42 @@ public class MainActivity extends AppCompatActivity implements AdapterLocalidade
         setSupportActionBar(toolbar);
 
         rvLocalidades = findViewById(R.id.rvLocalidades);
+        media_list = findViewById(R.id.media_list);
+
+        someActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        updateList();
+                    }
+                });
 
 
-        configRecyclerView();
+        //configRecyclerViewSwipe();
+
+        configMediaList();
 
     }
 
-    private void configRecyclerView(){
+    private void configMediaList(){
+        RecyclerView rv = new RecyclerView(this);
+        RecyclerView.LayoutParams params = new
+                RecyclerView.LayoutParams(
+                RecyclerView.LayoutParams.MATCH_PARENT,
+                RecyclerView.LayoutParams.WRAP_CONTENT
+        );
+        rv.setLayoutParams(params);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        adapterLocalidade2 = new AdapterLocalidade(localidadeDAO.getListLocalidade(), this);
+        rv.setAdapter(adapterLocalidade2);
+        rv.setLayoutManager(layoutManager);
+        rv.setVisibility(View.VISIBLE);
+
+        media_list.addView(rv);
+    }
+
+    private void configRecyclerViewSwipe(){
         rvLocalidades.setLayoutManager(new LinearLayoutManager(this));
         rvLocalidades.setHasFixedSize(true);
 
@@ -77,16 +112,6 @@ public class MainActivity extends AppCompatActivity implements AdapterLocalidade
         });
     }
 
-
-
-    @Override
-    public void OnClickListener(Localidade localidade) {
-        //Intent intent = new Intent(this, FromLocalidadeActivity.class);
-        Toast.makeText(getApplicationContext(), "Selecionado: " + localidade.getNome_localidade(),Toast.LENGTH_SHORT).show();
-        //intent.putExtra("localidade", localidade);
-        //startActivity(intent);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -99,9 +124,38 @@ public class MainActivity extends AppCompatActivity implements AdapterLocalidade
         int idMenu = item.getItemId();
 
         if(idMenu == R.id.menu_add){
-            startActivity(new Intent(this, FromLocalidadeActivity.class));
+            startActivityForResult();
         }
 
         return true;
+    }
+
+    public void startActivityForResult() {
+        someActivityResultLauncher.launch(new Intent(this, FormLocalidadeActivity.class));
+    }
+
+    @Override
+    public void onDeleteItem(int id) {
+        localidadeDAO.apagarLocalidade(id);
+        updateList();
+    }
+
+    @Override
+    public void onAddItem(int id) {
+
+    }
+
+    public void updateList() {
+        adapterLocalidade2.setLocalidadeList(localidadeDAO.getListLocalidade());
+        adapterLocalidade2.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClicked(Localidade localidade) {
+        //Intent intent = new Intent(this, FormLocalidadeActivity.class);
+        Toast.makeText(getApplicationContext(), "Selecionado: " + localidade.getNome_localidade(),Toast.LENGTH_SHORT).show();
+        //intent.putExtra("localidade", localidade);
+        //startActivity(intent);
+
     }
 }

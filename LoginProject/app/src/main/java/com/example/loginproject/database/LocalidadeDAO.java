@@ -1,10 +1,12 @@
-package com.example.loginproject;
+package com.example.loginproject.database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import com.example.loginproject.database.model.Localidade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +23,7 @@ public class LocalidadeDAO {
         this.read = dbHelper.getReadableDatabase();
     }
 
-    public void SalvarLocalidade(Localidade localidade){
+    public void salvarLocalidade(Localidade localidade){
         //classe utilizada para persistencia de dados no banco de dados (para mapear chave e valor das informações salvas)
         ContentValues cv = new ContentValues();
         cv.put("localidade", localidade.getNome_localidade());
@@ -60,6 +62,10 @@ public class LocalidadeDAO {
         return localidadeList;
 
 
+    }
+
+    public void apagarLocalidade(int idLocalidade){
+        write.delete(DBHelper.TB_LOCALIDADE, "id=?", new String[]{String.valueOf(idLocalidade)});
     }
 
     public void atualizaLocalidade(Localidade localidade){
