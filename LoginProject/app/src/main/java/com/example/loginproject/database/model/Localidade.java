@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Localidade implements Serializable {
     private String nome_localidade;
 
-    private int id;
+    public int id;
 
     public String getNome_localidade() {
         return nome_localidade;

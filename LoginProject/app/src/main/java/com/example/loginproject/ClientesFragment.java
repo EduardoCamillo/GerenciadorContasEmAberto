@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class ClientesFragment extends Fragment {
+public class ClientesDaLocalidadeFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,6 +31,25 @@ public class ClientesFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return view;
+
     }
-}
+    private List<Cliente> buscarClientesDaLocalidade ( int localidadeId){
+        // Substitua este exemplo por sua lógica real de busca de clientes no banco de dados ou em outra fonte de dados.
+
+        List<Cliente> listaDeClientes = new ArrayList<>();
+
+        // Suponha que você tenha uma classe Cliente com idLocalidade para identificar a localidade de cada cliente.
+        // Neste exemplo, estamos apenas criando alguns clientes fictícios.
+
+        // Simule a busca de clientes no banco de dados ou na fonte de dados real
+        for (int i = 1; i <= 10; i++) {
+            // Suponha que 1 a 5 clientes pertençam à localidade com o localidadeId fornecido.
+            if (i % 2 == 0) {
+                Cliente cliente = new Cliente(i, cliente.getNome_cliente());
+                listaDeClientes.add(cliente);
+            }
+        }
+
+        return listaDeClientes;
+    }
 }
