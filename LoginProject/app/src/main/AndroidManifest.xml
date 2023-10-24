@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LoginProject">
         <activity
+            android:name=".CalculadoraActivity"
+            android:exported="false" />
+        <activity
             android:name=".FormLocalidadeActivity"
             android:exported="false" />
         <activity

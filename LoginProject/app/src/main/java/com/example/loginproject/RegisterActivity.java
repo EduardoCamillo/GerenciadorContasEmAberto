@@ -2,6 +2,7 @@ package com.example.loginproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,12 +19,14 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText edit_email;
     private EditText edit_senha;
     private Button btn_delete;
+    private Button butao_teste;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        butao_teste = findViewById(R.id.btn_testando);
         btn_delete = findViewById(R.id.btn_delete);
         btn_register = findViewById(R.id.btn_register);
         edit_senha = findViewById(R.id.edit_senha);
@@ -33,6 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
         //criando tabela
         bd.execSQL("CREATE TABLE IF NOT EXISTS user(email VARCHAR, senha VARCHAR)");
 
+        butao_teste.setOnClickListener(v ->{
+            startActivity(new Intent(this, CalculadoraActivity.class));
+        });
 
         btn_register.setOnClickListener(v -> {
             String emailE = edit_email.getText().toString();

@@ -1,10 +1,11 @@
 package com.example.loginproject;
 
+import android.content.ContextWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,11 +45,14 @@ public class AdapterLocalidade extends RecyclerView.Adapter<AdapterLocalidade.My
         holder.nome_localidade.setTag(localidade.getId());
 
         holder.itemView.setOnLongClickListener(view -> {
+
             onClick.onDeleteItem(localidade.getId());
             return true;
         });
         holder.itemView.setOnClickListener(v -> onClick.onItemClicked(localidade));
     }
+
+
 
     @Override
     public int getItemCount() {
