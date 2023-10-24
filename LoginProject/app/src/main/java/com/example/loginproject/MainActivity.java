@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements AdapterLocalidade
     @Override
     public void onItemClicked(Localidade localidade) {
         //Intent intent = new Intent(this, FormLocalidadeActivity.class);
+
         Toast.makeText(getApplicationContext(), "Selecionado: " + localidade.getNome_localidade(),Toast.LENGTH_SHORT).show();
         //intent.putExtra("localidade", localidade);
         //startActivity(intent);
