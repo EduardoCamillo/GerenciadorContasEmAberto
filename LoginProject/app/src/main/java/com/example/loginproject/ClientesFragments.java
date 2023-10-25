@@ -8,14 +8,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.loginproject.database.model.Cliente;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientesDaLocalidadeFragment extends Fragment {
+public class ClientesFragments extends Fragment {
+
+    private ClientesAdapter clientesAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_clientes, container, false);
+        View view = inflater.inflate(R.layout.fragment_clientes_fragments, container, false);
 
         // Recupera o identificador da localidade dos argumentos
         int localidadeId = getArguments().getInt("localidade_id", -1);
@@ -24,16 +28,15 @@ public class ClientesDaLocalidadeFragment extends Fragment {
         List<Cliente> clientes = buscarClientesDaLocalidade(localidadeId);
 
         // Configurar um RecyclerView para exibir os clientes
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewClientes);
+        RecyclerView recyclerView = view.findViewById(R.id.rv_clientes);
         // Configurar um adapter e definir os clientes no RecyclerView
         ClientesAdapter adapter = new ClientesAdapter(clientes);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return view;
-
     }
-    private List<Cliente> buscarClientesDaLocalidade ( int localidadeId){
+    private List<Cliente> buscarClientesDaLocalidade(int localidadeId) {
         // Substitua este exemplo por sua lógica real de busca de clientes no banco de dados ou em outra fonte de dados.
 
         List<Cliente> listaDeClientes = new ArrayList<>();
@@ -45,7 +48,7 @@ public class ClientesDaLocalidadeFragment extends Fragment {
         for (int i = 1; i <= 10; i++) {
             // Suponha que 1 a 5 clientes pertençam à localidade com o localidadeId fornecido.
             if (i % 2 == 0) {
-                Cliente cliente = new Cliente(i, cliente.getNome_cliente());
+                Cliente cliente = new Cliente(localidadeId, i, "nome cliente" );
                 listaDeClientes.add(cliente);
             }
         }
