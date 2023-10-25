@@ -155,6 +155,9 @@ public class MainActivity extends AppCompatActivity implements AdapterLocalidade
         //Intent intent = new Intent(this, FormLocalidadeActivity.class);
 
         Toast.makeText(getApplicationContext(), "Selecionado: " + localidade.getNome_localidade(),Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, ClientesAdapter.class);
+        intent.putExtra("localidade_id", localidade.getId());
+        startActivity(intent);
         //intent.putExtra("localidade", localidade);
         //startActivity(intent);
 

@@ -19,6 +19,9 @@ public class Cliente extends Localidade {
         this.nome_cliente = nome_cliente;
 
     }
+    public Cliente(){
+
+    }
 
     @Override
     public int getId() {

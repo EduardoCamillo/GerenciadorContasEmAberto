@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.loginproject.database.ClienteDAO;
+import com.example.loginproject.database.LocalidadeDAO;
 import com.example.loginproject.database.model.Cliente;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.List;
 public class ClientesFragments extends Fragment {
 
     private ClientesAdapter clientesAdapter;
+    private ClienteDAO clienteDAO;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,7 +33,7 @@ public class ClientesFragments extends Fragment {
         // Configurar um RecyclerView para exibir os clientes
         RecyclerView recyclerView = view.findViewById(R.id.rv_clientes);
         // Configurar um adapter e definir os clientes no RecyclerView
-        ClientesAdapter adapter = new ClientesAdapter(clientes);
+        ClientesAdapter adapter = new ClientesAdapter(clienteDAO.getListCliente(), (AdapterLocalidade.OnClick) this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
