@@ -155,9 +155,17 @@ public class MainActivity extends AppCompatActivity implements AdapterLocalidade
         //Intent intent = new Intent(this, FormLocalidadeActivity.class);
 
         Toast.makeText(getApplicationContext(), "Selecionado: " + localidade.getNome_localidade(),Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, ClientesAdapter.class);
-        intent.putExtra("localidade_id", localidade.getId());
-        startActivity(intent);
+        // Cria um objeto do fragmento para exibir os clientes da localidade
+        ClientesFragments clientesFragments  = new ClientesFragments();
+        //passando o id da localidade como argumento
+        Bundle args = new Bundle();
+        args.putInt("localidade_id", localidade.getId());
+        clientesFragments.setArguments(args);
+
+
+        //substituindo o fragmento atual pelo fragmento de clientes
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, clientesFragments).addToBackStack(null).commit();
+
         //intent.putExtra("localidade", localidade);
         //startActivity(intent);
 
