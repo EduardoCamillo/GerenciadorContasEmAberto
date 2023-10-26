@@ -15,10 +15,10 @@ import com.example.loginproject.database.model.Localidade;
 public class AdapterLocalidade extends RecyclerView.Adapter<AdapterLocalidade.MyViewHolder> {
 
     private List<Localidade> localidadeList;
-    private OnClick onClick;
+    private AdapterClickListener onClick;
 
 
-    public AdapterLocalidade(List<Localidade> localidadeList, OnClick onClick) {
+    public AdapterLocalidade(List<Localidade> localidadeList, AdapterClickListener onClick) {
         this.localidadeList = localidadeList;
         this.onClick = onClick;
     }
@@ -62,14 +62,6 @@ public class AdapterLocalidade extends RecyclerView.Adapter<AdapterLocalidade.My
 
     public void notifyItemRangeRemoved(int position) {
     }
-
-    public interface OnClick{
-        void onDeleteItem(int id);
-        void onAddItem(int id);
-        void onItemClicked(Localidade localidade);
-    }
-
-
 
     static class MyViewHolder extends RecyclerView.ViewHolder{
         //declarar os componentes que irão conter no layout (neste caso é apenas um TextView)

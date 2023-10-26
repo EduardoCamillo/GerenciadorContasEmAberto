@@ -16,11 +16,11 @@ import java.util.List;
 public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.MyViewHolder>{
 
     private List<Cliente> clienteList;
-    private AdapterLocalidade.OnClick onClick;
+    private AdapterClickListener onClick;
 
 
 
-    public ClientesAdapter(List<Cliente> clienteList, AdapterLocalidade.OnClick onClick){
+    public ClientesAdapter(List<Cliente> clienteList, AdapterClickListener onClick){
         this.clienteList = clienteList;
         this.onClick = onClick;
     }
@@ -52,11 +52,6 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.MyView
     @Override
     public int getItemCount() {
         return clienteList.size();
-    }
-    public interface OnClick{
-        void onDeleteItem(int id);
-        void onAddItem(int id);
-        void onItemClicked(Cliente cliente);
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder{

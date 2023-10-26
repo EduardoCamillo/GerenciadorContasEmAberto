@@ -21,6 +21,8 @@ public class ClienteDAO {
         //write é a variavel para escrever (inserir) e read para ler (Select)
         this.write = dbHelper.getWritableDatabase();
         this.read = dbHelper.getReadableDatabase();
+
+        dbHelper.onUpgrade(write, 0, 1);
     }
     public void salvarCliente(Cliente cliente){
         //classe utilizada para persistencia de dados no banco de dados (para mapear chave e valor das informações salvas)

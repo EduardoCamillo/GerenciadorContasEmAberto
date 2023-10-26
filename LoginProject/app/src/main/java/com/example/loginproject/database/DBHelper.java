@@ -15,6 +15,16 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TB_LOCALIDADE = "TB_LOCALIDADE";
     public static final String TB_CLIENTE = "TB_CLIENTE";
 
+    public String sqlLocalidade = "CREATE TABLE IF NOT EXISTS " + TB_LOCALIDADE
+            + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            " localidade TEXT NOT NULL); ";
+
+    public String sqlCliente = "CREATE TABLE IF NOT EXISTS " + TB_CLIENTE
+            + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            " nome TEXT NOT NULL, " +
+            " idLocalidade INTEGER, " +
+            " FOREIGN KEY (idLocalidade) REFERENCES " + TB_LOCALIDADE + " (id));";
+
     public DBHelper(Context context) {
         super(context, NOME_DB, null, VERSAO);
     }
@@ -22,15 +32,6 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         //EXECUTADO SEMPRE QUANDO O APP FOR CRIAR O BANCO DE DADOS PELA PRIMEIRA VEZ
-        String sqlLocalidade = "CREATE TABLE IF NOT EXISTS " + TB_LOCALIDADE
-                + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                " localidade TEXT NOT NULL); ";
-
-        String sqlCliente = "CREATE TABLE IF NOT EXISTS " + TB_CLIENTE
-                + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                " nome TEXT NOT NULL, " +
-                " idLocalidade INTEGER, " +
-                " FOREIGN KEY (idLocalidade) REFERENCES " + TB_LOCALIDADE + " (id));";
         try {
             sqLiteDatabase.execSQL(sqlLocalidade);
             sqLiteDatabase.execSQL(sqlCliente);
@@ -42,5 +43,11 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         //EXECUTADO SEMPRE QUANDO ATUALIZARMOS A VERSÃO DO BANCO DE DADOS
+        try {
+            sqLiteDatabase.execSQL(sqlLocalidade);
+            sqLiteDatabase.execSQL(sqlCliente);
+        }catch(Exception e){
+            Log.i("ERRADO", "Deu ruim ao criar a tabela duzao");
+        }
     }
 }

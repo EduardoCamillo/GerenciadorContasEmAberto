@@ -1,12 +1,11 @@
 package com.example.loginproject;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
@@ -18,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -25,37 +25,49 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.loginproject.database.LocalidadeDAO;
+import com.example.loginproject.database.model.Cliente;
 import com.example.loginproject.database.model.Localidade;
-import com.tsuryo.swipeablerv.SwipeLeftRightCallback;
 import com.tsuryo.swipeablerv.SwipeableRecyclerView;
 
-public class MainActivity extends AppCompatActivity implements AdapterLocalidade.OnClick {
+import java.util.LinkedList;
+
+public class MainActivity extends AppCompatActivity implements AdapterClickListener {
+
+    private final int TYPE_CLIENTE = 0;
+    private final int TYPE_LOCALIDADE = 1;
 
     private AdapterLocalidade adapterLocalidade;
     private AdapterLocalidade adapterLocalidade2;
-    private LinearLayout media_list;
-
+    private FrameLayout fragment_container;
+    public Toolbar toolbar;
     private SwipeableRecyclerView rvLocalidades;
     private SQLiteDatabase db;
     private LocalidadeDAO localidadeDAO;
 
+    private LinkedList<Fragment> fragments;
+
     ActivityResultLauncher<Intent> someActivityResultLauncher;
 
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        db = openOrCreateDatabase("DB_APP",MODE_PRIVATE, null);
         localidadeDAO = new LocalidadeDAO(this);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        fragments = new LinkedList<>();
+
+        toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Localidades");
         toolbar.setTitleTextColor(Color.parseColor("#FFFFFF"));
         setSupportActionBar(toolbar);
 
-        rvLocalidades = findViewById(R.id.rvLocalidades);
-        media_list = findViewById(R.id.media_list);
+        fragment_container = findViewById(R.id.fragment_container);
 
+
+        //Configure result launcher to update media list when add new Localidade
         someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -71,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements AdapterLocalidade
 
     }
 
-    private void configMediaList(){
+    private void configMediaList() {
         RecyclerView rv = new RecyclerView(this);
         RecyclerView.LayoutParams params = new
                 RecyclerView.LayoutParams(
@@ -86,30 +98,7 @@ public class MainActivity extends AppCompatActivity implements AdapterLocalidade
         rv.setLayoutManager(layoutManager);
         rv.setVisibility(View.VISIBLE);
 
-        media_list.addView(rv);
-    }
-
-    private void configRecyclerViewSwipe(){
-        rvLocalidades.setLayoutManager(new LinearLayoutManager(this));
-        rvLocalidades.setHasFixedSize(true);
-
-        //declarando adapter
-        adapterLocalidade = new AdapterLocalidade(localidadeDAO.getListLocalidade(), this);
-        rvLocalidades.setAdapter(adapterLocalidade);
-
-        rvLocalidades.setListener(new SwipeLeftRightCallback.Listener() {
-            @Override
-            public void onSwipedLeft(int position) {
-
-            }
-
-            @Override
-            public void onSwipedRight(int position) {
-                localidadeDAO.getListLocalidade().remove(position);
-                //excluindo o item do adapter
-                adapterLocalidade.notifyItemRemoved(position);
-            }
-        });
+        fragment_container.addView(rv);
     }
 
     @Override
@@ -119,11 +108,34 @@ public class MainActivity extends AppCompatActivity implements AdapterLocalidade
         return true;
     }
 
+    public void addFragment(Fragment fragment){
+        fragments.add(fragment);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+
+        if(fragment instanceof ClientesFragments){
+            updateToolbar(TYPE_CLIENTE);
+        }
+
+    }
+
+    public void updateToolbar(int type){
+
+        if(type == TYPE_CLIENTE){
+            toolbar.setTitle("Clientes");
+            return;
+        }
+
+        if(type == TYPE_LOCALIDADE){
+            toolbar.setTitle("Localidades");
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int idMenu = item.getItemId();
 
-        if(idMenu == R.id.menu_add){
+        if (idMenu == R.id.menu_add) {
             startActivityForResult();
         }
 
@@ -145,29 +157,59 @@ public class MainActivity extends AppCompatActivity implements AdapterLocalidade
 
     }
 
-    public void updateList() {
-        adapterLocalidade2.setLocalidadeList(localidadeDAO.getListLocalidade());
-        adapterLocalidade2.notifyDataSetChanged();
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if(fragments.size() > 0){
+            Fragment fragment  = fragments.peekLast();
+
+            if(fragment instanceof ClientesFragments){
+                fragments.removeLast();
+                updateToolbar(TYPE_LOCALIDADE);
+            }
+
+            //if(fragment instanceof ContasFragment){
+            //    fragments.removeLast();
+            //    updateToolbar(TYPE_CLIENTE);
+            //}
+        }
     }
 
     @Override
-    public void onItemClicked(Localidade localidade) {
-        //Intent intent = new Intent(this, FormLocalidadeActivity.class);
+    public void onItemClicked(Object object) {
+        if(object instanceof Localidade){
+            Localidade localidade = (Localidade) object;
 
-        Toast.makeText(getApplicationContext(), "Selecionado: " + localidade.getNome_localidade(),Toast.LENGTH_SHORT).show();
-        // Cria um objeto do fragmento para exibir os clientes da localidade
-        ClientesFragments clientesFragments  = new ClientesFragments();
-        //passando o id da localidade como argumento
-        Bundle args = new Bundle();
-        args.putInt("localidade_id", localidade.getId());
-        clientesFragments.setArguments(args);
+            //Intent intent = new Intent(this, FormLocalidadeActivity.class);
+
+            Toast.makeText(getApplicationContext(), "Selecionado: " + localidade.getNome_localidade(),Toast.LENGTH_SHORT).show();
+            // Cria um objeto do fragmento para exibir os clientes da localidade
+            ClientesFragments clientesFragments  = new ClientesFragments();
+            //passando o id da localidade como argumento
+            Bundle args = new Bundle();
+            args.putInt("localidade_id", localidade.getId());
+            clientesFragments.setArguments(args);
+            clientesFragments.setAdapterClickListener(this);
 
 
-        //substituindo o fragmento atual pelo fragmento de clientes
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, clientesFragments).addToBackStack(null).commit();
 
-        //intent.putExtra("localidade", localidade);
-        //startActivity(intent);
+            //substituindo o fragmento atual pelo fragmento de clientes
+            addFragment(clientesFragments);
 
+            //intent.putExtra("localidade", localidade);
+            //startActivity(intent);
+            return;
+        }
+
+        if(object instanceof Cliente){
+            // Executa ação do click de cliente
+        }
+
+    }
+
+    public void updateList() {
+        adapterLocalidade2.setLocalidadeList(localidadeDAO.getListLocalidade());
+        adapterLocalidade2.notifyDataSetChanged();
     }
 }
