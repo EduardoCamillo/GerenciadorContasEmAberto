@@ -72,7 +72,7 @@ public class ClienteDAO {
         Cursor cursor = read.rawQuery(sql, new String[]{String.valueOf(localidadeId)});
 
         while (cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndex("id"));
+            int id = cursor.getInt(cursor.getColumnIndex("ID"));
             String nome = cursor.getString(cursor.getColumnIndex("nome"));
             int idLocalidade = cursor.getInt(cursor.getColumnIndex("idLocalidade")); // Recupere o ID da localidade
 

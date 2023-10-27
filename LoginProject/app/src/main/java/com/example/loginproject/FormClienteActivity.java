@@ -39,7 +39,6 @@ public class FormClienteActivity extends AppCompatActivity {
 
 
         botao_salvar.setOnClickListener(v -> {;
-            Toast.makeText(getApplicationContext(), "CLIENTE SALVO COM SUCESSO",Toast.LENGTH_LONG).show();
             salvarCliente();
         });
 
@@ -50,6 +49,7 @@ public class FormClienteActivity extends AppCompatActivity {
         String cliente = nome_cliente.getText().toString();
 
         if(!cliente.isEmpty()){
+            Toast.makeText(getApplicationContext(), "CLIENTE SALVO COM SUCESSO",Toast.LENGTH_LONG).show();
             Cliente cliente1 = new Cliente();
             cliente1.setNome_cliente(cliente);
             clienteDAO.salvarCliente(cliente1);

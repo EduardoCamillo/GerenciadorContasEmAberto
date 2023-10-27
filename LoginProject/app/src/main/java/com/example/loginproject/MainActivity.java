@@ -24,6 +24,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.loginproject.database.DBHelper;
 import com.example.loginproject.database.LocalidadeDAO;
 import com.example.loginproject.database.model.Cliente;
 import com.example.loginproject.database.model.Localidade;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
     private SwipeableRecyclerView rvLocalidades;
     private SQLiteDatabase db;
     private LocalidadeDAO localidadeDAO;
+    private DBHelper dbHelper;
 
     private LinkedList<Fragment> fragments;
 
