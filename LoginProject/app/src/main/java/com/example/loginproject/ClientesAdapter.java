@@ -25,6 +25,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.MyView
         this.onClick = onClick;
     }
 
+
     public void setClienteList(List<Cliente> clienteList) {
         this.clienteList = clienteList;
     }

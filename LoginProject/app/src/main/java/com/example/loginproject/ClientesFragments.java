@@ -38,7 +38,7 @@ public class ClientesFragments extends Fragment {
         // Configurar um RecyclerView para exibir os clientes
         RecyclerView recyclerView = view.findViewById(R.id.rv_clientes);
         // Configurar um adapter e definir os clientes no RecyclerView
-        clientesAdapter = new ClientesAdapter(clienteDAO.getListCliente(), adapterClickListener);
+        clientesAdapter = new ClientesAdapter(clienteDAO.getClientesDaLocalidade(localidadeId), adapterClickListener);
         recyclerView.setAdapter(clientesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
@@ -50,22 +50,14 @@ public class ClientesFragments extends Fragment {
     }
 
     private List<Cliente> buscarClientesDaLocalidade(int localidadeId) {
-        // Substitua este exemplo por sua lógica real de busca de clientes no banco de dados ou em outra fonte de dados.
-
         List<Cliente> listaDeClientes = new ArrayList<>();
 
-        // Suponha que você tenha uma classe Cliente com idLocalidade para identificar a localidade de cada cliente.
-        // Neste exemplo, estamos apenas criando alguns clientes fictícios.
-
-        // Simule a busca de clientes no banco de dados ou na fonte de dados real
-        for (int i = 1; i <= 10; i++) {
-            // Suponha que 1 a 5 clientes pertençam à localidade com o localidadeId fornecido.
-            if (i % 2 == 0) {
-                Cliente cliente = new Cliente(localidadeId, i, "nome cliente" );
-                listaDeClientes.add(cliente);
-            }
-        }
+        // Use o ClienteDAO para buscar os clientes da localidade
+        clienteDAO = new ClienteDAO(requireContext());
+        listaDeClientes = clienteDAO.getClientesDaLocalidade(localidadeId);
 
         return listaDeClientes;
     }
+
+
 }

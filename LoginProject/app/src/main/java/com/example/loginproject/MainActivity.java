@@ -136,11 +136,20 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
         int idMenu = item.getItemId();
 
         if (idMenu == R.id.menu_add) {
-            startActivityForResult();
-        }
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 
-        return true;
+            if (currentFragment instanceof ClientesFragments) {
+                someActivityResultLauncher.launch(new Intent(this, FormClienteActivity.class));
+            } else {
+                someActivityResultLauncher.launch(new Intent(this, FormLocalidadeActivity.class));
+            }
+
+            return true;
+
+        }
+        return super.onOptionsItemSelected(item);
     }
+
 
     public void startActivityForResult() {
         someActivityResultLauncher.launch(new Intent(this, FormLocalidadeActivity.class));
