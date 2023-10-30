@@ -87,6 +87,9 @@ public class ClienteDAO {
         cursor.close();
         return listaDeClientes;
     }
+    public void apagarCliente(int idCliente, int idLocalidade){
+        write.delete(DBHelper.TB_LOCALIDADE, "idLocalidade=" + idLocalidade, new String[]{String.valueOf(idCliente)});
+    }
 
 }
 

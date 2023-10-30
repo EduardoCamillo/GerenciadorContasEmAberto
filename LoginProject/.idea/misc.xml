@@ -15,7 +15,9 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_clientes_fragments.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_contas.xml" value="0.27447916666666666" />
         <entry key="app/src/main/res/layout/item_clientes.xml" value="0.18072916666666666" />
+        <entry key="app/src/main/res/layout/item_contas.xml" value="0.27447916666666666" />
         <entry key="app/src/main/res/layout/item_localidades.xml" value="0.25" />
         <entry key="app/src/main/res/layout/nome_cadastro.xml" value="0.31145833333333334" />
         <entry key="app/src/main/res/layout/nome_clientes.xml" value="0.25" />
