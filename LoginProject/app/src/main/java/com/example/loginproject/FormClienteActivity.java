@@ -17,12 +17,15 @@ public class FormClienteActivity extends AppCompatActivity {
     private Button botao_salvar;
     private SQLiteDatabase db;
     private ClienteDAO clienteDAO;
+    private int localidadeId;
 
     private Cliente cliente;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form_cliente);
+
+        localidadeId = getIntent().getIntExtra("localidadeId", -1);
 
         db = openOrCreateDatabase("DB_APP",MODE_PRIVATE, null);
         clienteDAO = new ClienteDAO(this);
@@ -52,6 +55,7 @@ public class FormClienteActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "CLIENTE SALVO COM SUCESSO",Toast.LENGTH_LONG).show();
             Cliente cliente1 = new Cliente();
             cliente1.setNome_cliente(cliente);
+            cliente1.setId_localidade(localidadeId);
             clienteDAO.salvarCliente(cliente1);
 
             setResult(Activity.RESULT_OK);

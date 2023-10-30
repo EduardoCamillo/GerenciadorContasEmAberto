@@ -24,7 +24,7 @@ public class Cliente extends Localidade {
     }
 
     public int getId_localidade() {
-        return 2;
+        return id_localidade;
     }
 
     public void setId_localidade(int id_localidade) {

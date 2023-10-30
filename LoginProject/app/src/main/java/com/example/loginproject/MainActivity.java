@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
 
     private final int TYPE_CLIENTE = 0;
     private final int TYPE_LOCALIDADE = 1;
+    private final int TYPE_CONTAS = 2;
 
     private AdapterLocalidade adapterLocalidade;
     private AdapterLocalidade adapterLocalidade2;
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
         rv.setVisibility(View.VISIBLE);
 
         fragment_container.addView(rv);
+
     }
 
     @Override
@@ -141,7 +143,11 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 
             if (currentFragment instanceof ClientesFragments) {
-                someActivityResultLauncher.launch(new Intent(this, FormClienteActivity.class));
+                ClientesFragments clientesFragments = (ClientesFragments) currentFragment;
+
+                Intent intent = new Intent(this, FormClienteActivity.class);
+                intent.putExtra("localidadeId", clientesFragments.getLocalidadeId());
+                someActivityResultLauncher.launch(intent);
             } else {
                 someActivityResultLauncher.launch(new Intent(this, FormLocalidadeActivity.class));
             }

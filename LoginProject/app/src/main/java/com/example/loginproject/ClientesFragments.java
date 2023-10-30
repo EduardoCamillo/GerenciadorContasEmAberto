@@ -22,13 +22,14 @@ public class ClientesFragments extends Fragment {
     private ClientesAdapter clientesAdapter;
     private ClienteDAO clienteDAO;
     private AdapterClickListener adapterClickListener;
+    private int localidadeId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_clientes_fragments, container, false);
 
         // Recupera o identificador da localidade dos argumentos
-        int localidadeId = getArguments().getInt("localidade_id", -1);
+         localidadeId = getArguments().getInt("localidade_id", -1);
 
         clienteDAO = new ClienteDAO(requireContext());
 
@@ -47,6 +48,10 @@ public class ClientesFragments extends Fragment {
 
     public void setAdapterClickListener(AdapterClickListener listener){
         this.adapterClickListener = listener;
+    }
+
+    public int getLocalidadeId() {
+        return localidadeId;
     }
 
     private List<Cliente> buscarClientesDaLocalidade(int localidadeId) {
