@@ -15,6 +15,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TB_LOCALIDADE = "TB_LOCALIDADE";
     public static final String TB_CLIENTE = "TB_CLIENTE";
 
+    public static final String TB_CONTA = "TB_CONTA";
+
     public String sqlLocalidade = "CREATE TABLE IF NOT EXISTS " + TB_LOCALIDADE
             + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             " localidade TEXT NOT NULL); ";
@@ -24,6 +26,12 @@ public class DBHelper extends SQLiteOpenHelper {
             " nome TEXT NOT NULL, " +
             " idLocalidade INTEGER, " +
             " FOREIGN KEY (idLocalidade) REFERENCES " + TB_LOCALIDADE + " (id));";
+
+    public String sqlConta = "CREATE TABLE IF NOT EXISTS " + TB_CONTA
+            + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            " valor VARCHAR NOT NULL, " +
+          "data DATE NOT NULL, " +
+            "FOREIGN KEY (idCliente) REFERENCES " + TB_CLIENTE + "(ID)); ";
 
     public DBHelper(Context context) {
         super(context, NOME_DB, null, VERSAO);
@@ -46,6 +54,7 @@ public class DBHelper extends SQLiteOpenHelper {
         try {
             sqLiteDatabase.execSQL(sqlLocalidade);
             sqLiteDatabase.execSQL(sqlCliente);
+            sqLiteDatabase.execSQL(sqlConta);
         }catch(Exception e){
             Log.i("ERRADO", "Deu ruim ao criar a tabela duzao");
         }
