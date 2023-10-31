@@ -20,7 +20,7 @@ public class Contas extends Cliente{
     public float getValor_compra() {
         return valor_compra;
     }
-    public void setValor_compra(){
+    public void setValor_compra(float valor_compra){
         this.valor_compra = valor_compra;
     }
 

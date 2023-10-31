@@ -30,7 +30,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public String sqlConta = "CREATE TABLE IF NOT EXISTS " + TB_CONTA
             + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             " valor VARCHAR NOT NULL, " +
-          "data DATE NOT NULL, " +
+          "data DATE , " +
+            "idCliente INTEGER, " +
             "FOREIGN KEY (idCliente) REFERENCES " + TB_CLIENTE + "(ID)); ";
 
     public DBHelper(Context context) {
@@ -43,6 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
         try {
             sqLiteDatabase.execSQL(sqlLocalidade);
             sqLiteDatabase.execSQL(sqlCliente);
+            sqLiteDatabase.execSQL(sqlConta);
         }catch(Exception e){
             Log.i("ERRADO", "Deu ruim ao criar a tabela duzao");
         }

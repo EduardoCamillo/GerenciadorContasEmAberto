@@ -28,6 +28,7 @@ import com.example.loginproject.database.ClienteDAO;
 import com.example.loginproject.database.DBHelper;
 import com.example.loginproject.database.LocalidadeDAO;
 import com.example.loginproject.database.model.Cliente;
+import com.example.loginproject.database.model.Contas;
 import com.example.loginproject.database.model.Localidade;
 import com.tsuryo.swipeablerv.SwipeableRecyclerView;
 
@@ -122,6 +123,9 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
         if(fragment instanceof ClientesFragments){
             updateToolbar(TYPE_CLIENTE);
         }
+        if(fragment instanceof ContasFragment){
+            updateToolbar(TYPE_CONTAS);
+        }
 
     }
 
@@ -134,6 +138,10 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
 
         if(type == TYPE_LOCALIDADE){
             toolbar.setTitle("Localidades");
+            return;
+        }
+        if(type == TYPE_CONTAS){
+            toolbar.setTitle("Contas");
         }
     }
 
@@ -150,7 +158,14 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
                 Intent intent = new Intent(this, FormClienteActivity.class);
                 intent.putExtra("localidadeId", clientesFragments.getLocalidadeId());
                 someActivityResultLauncher.launch(intent);
-            } else {
+            }else if(currentFragment instanceof ContasFragment){
+                ContasFragment contasFragment = (ContasFragment) currentFragment;
+
+                Intent intent = new Intent(this, FormContaActivity.class);
+                intent.putExtra("clienteId",contasFragment.getClienteId());
+                someActivityResultLauncher.launch(intent);
+            }
+            else {
                 someActivityResultLauncher.launch(new Intent(this, FormLocalidadeActivity.class));
             }
 
@@ -188,10 +203,10 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
                 updateToolbar(TYPE_LOCALIDADE);
             }
 
-            //if(fragment instanceof ContasFragment){
-            //    fragments.removeLast();
-            //    updateToolbar(TYPE_CLIENTE);
-            //}
+            if(fragment instanceof ContasFragment){
+                fragments.removeLast();
+                updateToolbar(TYPE_CLIENTE);
+            }
         }
     }
 
@@ -216,6 +231,29 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
             //substituindo o fragmento atual pelo fragmento de clientes
             addFragment(clientesFragments);
 
+            if(object instanceof Cliente){
+                // Executa ação do click de cliente
+                Cliente cliente = (Cliente) object;
+
+                //Intent intent = new Intent(this, FormLocalidadeActivity.class);
+
+                Toast.makeText(getApplicationContext(), "Selecionado: " + cliente.getNome_cliente(),Toast.LENGTH_SHORT).show();
+                // Cria um objeto do fragmento para exibir as contas do cliente
+                ContasFragment contasFragment  = new ContasFragment();
+                //passando o id da localidade como argumento
+                 args = new Bundle();
+                args.putInt("cliente_id", cliente.getId());
+                contasFragment.setArguments(args);
+                contasFragment.setAdapterClickListener(this);
+
+
+
+                //substituindo o fragmento atual pelo fragmento de contas
+                addFragment(contasFragment);
+
+                //intent.putExtra("localidade", localidade);
+                //startActivity(intent);
+            }
             //intent.putExtra("localidade", localidade);
             //startActivity(intent);
             return;
@@ -223,6 +261,26 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
 
         if(object instanceof Cliente){
             // Executa ação do click de cliente
+            Cliente cliente = (Cliente) object;
+
+            //Intent intent = new Intent(this, FormLocalidadeActivity.class);
+
+            Toast.makeText(getApplicationContext(), "Selecionado: " + cliente.getNome_cliente(),Toast.LENGTH_SHORT).show();
+            // Cria um objeto do fragmento para exibir as contas do cliente
+            ContasFragment contasFragment  = new ContasFragment();
+            //passando o id da localidade como argumento
+            Bundle args = new Bundle();
+            args.putInt("cliente_id", cliente.getId());
+            contasFragment.setArguments(args);
+            contasFragment.setAdapterClickListener(this);
+
+
+
+            //substituindo o fragmento atual pelo fragmento de contas
+            addFragment(contasFragment);
+
+            //intent.putExtra("localidade", localidade);
+            //startActivity(intent);
         }
 
     }

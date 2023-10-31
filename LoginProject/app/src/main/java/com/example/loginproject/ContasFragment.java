@@ -7,11 +7,12 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.example.loginproject.database.ContaDAO;
 
 import com.example.loginproject.database.ClienteDAO;
 import com.example.loginproject.database.LocalidadeDAO;
 import com.example.loginproject.database.model.Cliente;
+import com.example.loginproject.database.model.Contas;
 import com.example.loginproject.database.model.Localidade;
 
 import java.text.SimpleDateFormat;
@@ -23,8 +24,8 @@ import java.util.Locale;
 
 public class ContasFragment extends Fragment {
 
-    private ClientesAdapter clientesAdapter;
-    private ClienteDAO clienteDAO;
+    private AdapterConta adapterConta;
+    private ContaDAO contaDAO;
     private AdapterClickListener adapterClickListener;
     private int clienteId;
 
@@ -39,12 +40,33 @@ public class ContasFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
 
+        contaDAO = new ContaDAO(requireContext());
 
-
-
-
-
+        RecyclerView recyclerView = view.findViewById(R.id.rv_contas);
+        adapterConta = new AdapterConta(contaDAO.getContasCliente(clienteId), adapterClickListener);
+        recyclerView.setAdapter(adapterConta);
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
     return view;
     }
+    public void setAdapterClickListener(AdapterClickListener listener){
+        this.adapterClickListener = listener;
+    }
+
+    public int getClienteId() {
+        return clienteId;
+    }
+
+
+
+    private List<Contas> buscarContasdoCliente(int clienteId) {
+        List<Contas> listaDeContas = new ArrayList<>();
+
+        // Use o ClienteDAO para buscar os clientes da localidade
+        contaDAO = new ContaDAO(requireContext());
+        listaDeContas = contaDAO.getContasCliente(clienteId);
+
+        return listaDeContas;
+    }
+
 }
