@@ -1,12 +1,17 @@
 package com.example.loginproject.database.model;
 import java.text.SimpleDateFormat;
+import android.text.format.DateFormat;
 import java.util.Date;
 
 public class Contas extends Cliente{
     private int id;
     private int id_cliente;
     private float valor_compra;
-    private String data_compra;
+
+
+
+
+
 
     @Override
     public int getId() {
@@ -32,4 +37,6 @@ public class Contas extends Cliente{
     public void setId_cliente(int id_cliente) {
         this.id_cliente = id_cliente;
     }
+
+
 }

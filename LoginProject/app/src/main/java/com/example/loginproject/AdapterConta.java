@@ -4,13 +4,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import android.text.format.DateFormat;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.loginproject.database.model.Cliente;
 import com.example.loginproject.database.model.Contas;
 
+import java.util.Date;
 import java.util.List;
 
 public class AdapterConta extends RecyclerView.Adapter<AdapterConta.MyViewHolder>{
@@ -34,6 +35,7 @@ public class AdapterConta extends RecyclerView.Adapter<AdapterConta.MyViewHolder
     public void onBindViewHolder(@NonNull AdapterConta.MyViewHolder holder, int position) {
         Contas contas = contasList.get(position);
         holder.valor_compra.setText(String.valueOf((int) contas.getValor_compra()));
+        // Configurar a data atual para o campo data_compra
 
         // Configurar um clique no item do RecyclerView
         holder.itemView.setOnClickListener(view -> {
@@ -52,9 +54,11 @@ public class AdapterConta extends RecyclerView.Adapter<AdapterConta.MyViewHolder
     static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView valor_compra;
+        TextView data_compra;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             valor_compra = itemView.findViewById(R.id.valor_compra);
+            data_compra = itemView.findViewById(R.id.data);
         }
     }
 }

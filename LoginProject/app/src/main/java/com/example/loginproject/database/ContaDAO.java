@@ -10,6 +10,7 @@ import com.example.loginproject.database.model.Cliente;
 import com.example.loginproject.database.model.Localidade;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ContaDAO {
@@ -27,10 +28,14 @@ public class ContaDAO {
     }
 
     public void salvarConta(Contas conta) {
+
+
         //classe utilizada para persistencia de dados no banco de dados (para mapear chave e valor das informações salvas)
         ContentValues cv = new ContentValues();
         cv.put("valor", conta.getValor_compra());
         cv.put("idCliente", conta.getId_cliente());
+        cv.put("data", System.currentTimeMillis());
+
 
         try {
             write.insert(DBHelper.TB_CONTA, null, cv);
