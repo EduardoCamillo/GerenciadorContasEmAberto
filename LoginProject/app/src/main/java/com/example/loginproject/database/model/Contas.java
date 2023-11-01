@@ -1,11 +1,12 @@
 package com.example.loginproject.database.model;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Contas extends Cliente{
     private int id;
     private int id_cliente;
     private float valor_compra;
-
-
+    private String data_compra;
 
     @Override
     public int getId() {

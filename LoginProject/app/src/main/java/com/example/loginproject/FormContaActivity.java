@@ -60,6 +60,18 @@ public class FormContaActivity extends AppCompatActivity {
 
         if(!conta.isEmpty()){
             float ValorConta = Float.parseFloat(conta);
+            // Obter a data selecionada do DatePicker
+            int day = data.getDayOfMonth();
+            int month = data.getMonth();
+            int year = data.getYear();
+
+            // Aqui você pode usar a data selecionada para fazer o que deseja, como salvá-la no objeto de Contas
+            String dataCompra = day + "-" + (month + 1) + "-" + year; // Formatando a data
+
+
+
+
+
             Toast.makeText(getApplicationContext(), "COMPRA SALVA COM SUCESSO",Toast.LENGTH_LONG).show();
             Contas conta1 = new Contas();
             conta1.setValor_compra(ValorConta);

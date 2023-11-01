@@ -33,7 +33,7 @@ public class AdapterConta extends RecyclerView.Adapter<AdapterConta.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull AdapterConta.MyViewHolder holder, int position) {
         Contas contas = contasList.get(position);
-        holder.valor_compra.setText((int) contas.getValor_compra());
+        holder.valor_compra.setText(String.valueOf((int) contas.getValor_compra()));
 
         // Configurar um clique no item do RecyclerView
         holder.itemView.setOnClickListener(view -> {
@@ -46,7 +46,7 @@ public class AdapterConta extends RecyclerView.Adapter<AdapterConta.MyViewHolder
 
     @Override
     public int getItemCount() {
-        return 0;
+        return contasList.size();
     }
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
