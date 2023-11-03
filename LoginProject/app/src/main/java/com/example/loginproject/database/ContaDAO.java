@@ -9,9 +9,11 @@ import com.example.loginproject.database.DBHelper;
 import com.example.loginproject.database.model.Cliente;
 import com.example.loginproject.database.model.Localidade;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ContaDAO {
 
@@ -28,13 +30,14 @@ public class ContaDAO {
     }
 
     public void salvarConta(Contas conta) {
-
+        String dataAtual = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
         //classe utilizada para persistencia de dados no banco de dados (para mapear chave e valor das informações salvas)
         ContentValues cv = new ContentValues();
         cv.put("valor", conta.getValor_compra());
         cv.put("idCliente", conta.getId_cliente());
-        cv.put("data", System.currentTimeMillis());
+        //cv.put("data", System.currentTimeMillis());
+        cv.put("data", dataAtual);
 
 
         try {
@@ -55,12 +58,23 @@ public class ContaDAO {
             int id = cursor.getInt(cursor.getColumnIndex("id"));
             float valor = cursor.getFloat(cursor.getColumnIndex("valor"));
             int idCliente = cursor.getInt(cursor.getColumnIndex("idCliente")); // Recupere o ID da localidade
+            String dataString = cursor.getString(cursor.getColumnIndex("data"));
+
+            Date data = null;
+            try {
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                data = sdf.parse(dataString);
+            } catch (java.text.ParseException e) {
+                e.printStackTrace();
+            }
 
 
             Contas conta = new Contas();
             conta.setId(id);
             conta.setValor_compra(valor);
             conta.setId_cliente(idCliente);
+            conta.setData(data);
+            //conta.setDataString(dataString);
             listaDeContas.add(conta);
         }
 

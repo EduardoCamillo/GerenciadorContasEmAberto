@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.text.format.DateFormat;
+import java.text.SimpleDateFormat;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,6 +15,7 @@ import com.example.loginproject.database.model.Contas;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AdapterConta extends RecyclerView.Adapter<AdapterConta.MyViewHolder>{
     private List<Contas> contasList;
@@ -35,7 +38,24 @@ public class AdapterConta extends RecyclerView.Adapter<AdapterConta.MyViewHolder
     public void onBindViewHolder(@NonNull AdapterConta.MyViewHolder holder, int position) {
         Contas contas = contasList.get(position);
         holder.valor_compra.setText(String.valueOf((int) contas.getValor_compra()));
+        // Formatando a data para exibição no TextView
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy ", Locale.getDefault());
+        String dataFormatada = dateFormat.format(contas.getData());
+        holder.data_compra.setText(dataFormatada);
         // Configurar a data atual para o campo data_compra
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
+        //String dataFormatada = dateFormat.format(contas.getDataString());
+        //holder.data_compra.setText(dataFormatada);
+        /*
+        Date data = contas.getData();
+        if (data != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+            String dataFormatada = dateFormat.format(data);
+            holder.data_compra.setText(dataFormatada);
+        } else {
+            holder.data_compra.setText("Data Inválida"); // Ou outra ação apropriada em caso de data inválida
+        }
+        */
 
         // Configurar um clique no item do RecyclerView
         holder.itemView.setOnClickListener(view -> {

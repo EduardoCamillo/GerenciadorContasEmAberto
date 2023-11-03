@@ -23,7 +23,7 @@
         android:id="@+id/data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="28/10/2023"
+        android:text="28-10-2023"
         android:textColor="@android:color/white"
         android:layout_margin="16dp"
         android:textSize="25dp"
