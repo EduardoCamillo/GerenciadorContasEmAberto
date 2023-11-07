@@ -82,5 +82,20 @@ public class ContaDAO {
         return listaDeContas;
     }
 
+    public float CalcularValor(int clienteId){
+        float valorTotal = 0;
 
-}
+        String sql = "SELECT valor FROM " + DBHelper.TB_CONTA + " WHERE idCliente = ?";
+        Cursor cursor = read.rawQuery(sql, new String[]{String.valueOf(clienteId)});
+
+        while (cursor.moveToNext()) {
+            valorTotal += cursor.getFloat(cursor.getColumnIndex("valor"));
+        }
+
+        cursor.close();
+        return valorTotal;
+    }
+ }
+
+
+

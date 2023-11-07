@@ -1,15 +1,19 @@
 package com.example.loginproject;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.loginproject.database.ContaDAO;
 
 import com.example.loginproject.database.ClienteDAO;
+import com.example.loginproject.database.DBHelper;
 import com.example.loginproject.database.LocalidadeDAO;
 import com.example.loginproject.database.model.Cliente;
 import com.example.loginproject.database.model.Contas;
@@ -28,6 +32,7 @@ public class ContasFragment extends Fragment {
     private ContaDAO contaDAO;
     private AdapterClickListener adapterClickListener;
     private int clienteId;
+    private TextView valorConta;
 
 
 
@@ -35,6 +40,15 @@ public class ContasFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contas, container, false);
+
+
+        valorConta = view.findViewById(R.id.result_final);
+        clienteId = getArguments().getInt("cliente_id", -1);
+
+        contaDAO = new ContaDAO(requireContext());
+        float valorTotalContas = contaDAO.CalcularValor(clienteId);
+
+        valorConta.setText("Total: " + String.valueOf(valorTotalContas)); // Define o valor no TextView
 
         clienteId = getArguments().getInt("cliente_id", -1);
         Calendar calendar = Calendar.getInstance();
@@ -68,5 +82,6 @@ public class ContasFragment extends Fragment {
 
         return listaDeContas;
     }
+
 
 }
