@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
     private ClientesFragments clientesFragments1;
     private LinkedList<Fragment> fragments;
     private String currentLocalidade;
+    private String currentCliente;
 
     ActivityResultLauncher<Intent> someActivityResultLauncher;
 
@@ -144,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
             return;
         }
         if(type == TYPE_CONTAS){
-            toolbar.setTitle("Contas");
+            toolbar.setTitle("Contas" + (currentCliente != null ? " de " + currentCliente : ""));
         }
     }
 
@@ -251,6 +252,9 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
                 args.putInt("cliente_id", cliente.getId());
                 contasFragment.setArguments(args);
                 contasFragment.setAdapterClickListener(this);
+
+                args.putString("nome_cliente", cliente.getNome_cliente());
+                currentCliente = cliente.getNomeCliente();
 
 
 
