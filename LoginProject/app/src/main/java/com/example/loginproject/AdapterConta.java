@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.loginproject.database.model.Cliente;
 import com.example.loginproject.database.model.Contas;
+import com.example.loginproject.database.model.Localidade;
 
 import java.util.Date;
 import java.util.List;
@@ -37,14 +38,14 @@ public class AdapterConta extends RecyclerView.Adapter<AdapterConta.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull AdapterConta.MyViewHolder holder, int position) {
         Contas contas = contasList.get(position);
-        holder.valor_compra.setText(String.valueOf((int) contas.getValor_compra()));
+        holder.valor_compra.setText(String.valueOf((float) contas.getValor_compra()));
         // Formatando a data para exibição no TextView
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy ", Locale.getDefault());
         String dataFormatada = dateFormat.format(contas.getData());
         holder.data_compra.setText(dataFormatada);
         // Configurar a data atual para o campo data_compra
         //SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
-        //String dataFormatada = dateFormat.format(contas.getDataString());
+        //String dataFormatada = dateFormat.    format(contas.getDataString());
         //holder.data_compra.setText(dataFormatada);
         /*
         Date data = contas.getData();
@@ -80,5 +81,8 @@ public class AdapterConta extends RecyclerView.Adapter<AdapterConta.MyViewHolder
             valor_compra = itemView.findViewById(R.id.valor_compra);
             data_compra = itemView.findViewById(R.id.data);
         }
+    }
+    public void setContasList(List<Contas> contasList){
+        this.contasList = contasList;
     }
 }

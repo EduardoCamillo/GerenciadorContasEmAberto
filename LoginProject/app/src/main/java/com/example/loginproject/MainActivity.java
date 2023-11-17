@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
 
     private AdapterLocalidade adapterLocalidade;
     private AdapterLocalidade adapterLocalidade2;
+    private AdapterConta adapterConta;
+    private ClientesAdapter adapterCliente;
     private FrameLayout fragment_container;
     public Toolbar toolbar;
     private SwipeableRecyclerView rvLocalidades;
@@ -49,8 +51,9 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
     private LocalidadeDAO localidadeDAO;
     private ClienteDAO clienteDAO1;
     private DBHelper dbHelper;
-
+    private ClientesFragments clientesFragments1;
     private LinkedList<Fragment> fragments;
+    private String currentLocalidade;
 
     ActivityResultLauncher<Intent> someActivityResultLauncher;
 
@@ -59,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        clientesFragments1 = new ClientesFragments();
         db = openOrCreateDatabase("DB_APP",MODE_PRIVATE, null);
         localidadeDAO = new LocalidadeDAO(this);
 
@@ -132,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
     public void updateToolbar(int type){
 
         if(type == TYPE_CLIENTE){
-            toolbar.setTitle("Clientes");
+            toolbar.setTitle("Clientes" + (currentLocalidade != null ? " da " + currentLocalidade : ""));
             return;
         }
 
@@ -225,6 +228,9 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
             args.putInt("localidade_id", localidade.getId());
             clientesFragments.setArguments(args);
             clientesFragments.setAdapterClickListener(this);
+
+            args.putString("nome_localidade", localidade.getNome_localidade());
+            currentLocalidade = localidade.getNome_localidade();
 
 
 

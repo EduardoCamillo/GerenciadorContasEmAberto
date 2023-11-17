@@ -10,9 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.loginproject.database.ClienteDAO;
-import com.example.loginproject.database.LocalidadeDAO;
 import com.example.loginproject.database.model.Cliente;
-import com.example.loginproject.database.model.Localidade;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +21,7 @@ public class ClientesFragments extends Fragment {
     private ClienteDAO clienteDAO;
     private AdapterClickListener adapterClickListener;
     private int localidadeId;
+    public String nomeLocalidade;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -30,6 +29,7 @@ public class ClientesFragments extends Fragment {
 
         // Recupera o identificador da localidade dos argumentos
          localidadeId = getArguments().getInt("localidade_id", -1);
+         nomeLocalidade = getArguments().getString("nome_localidade");
 
         clienteDAO = new ClienteDAO(requireContext());
 
@@ -62,6 +62,9 @@ public class ClientesFragments extends Fragment {
         listaDeClientes = clienteDAO.getClientesDaLocalidade(localidadeId);
 
         return listaDeClientes;
+    }
+    public String getLocalidadeName(){
+        return nomeLocalidade;
     }
 
 
