@@ -59,6 +59,11 @@ public class AdapterConta extends RecyclerView.Adapter<AdapterConta.MyViewHolder
         */
 
         // Configurar um clique no item do RecyclerView
+        holder.itemView.setOnLongClickListener(view -> {
+
+            onClick.onDeleteItem(contas.getId());
+            return true;
+        });
         holder.itemView.setOnClickListener(view -> {
             if (onClick != null) {
                 onClick.onItemClicked(contas);

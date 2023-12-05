@@ -1,4 +1,7 @@
 package com.example.loginproject.database;
+import static android.content.Context.MODE_PRIVATE;
+import static android.database.sqlite.SQLiteDatabase.openOrCreateDatabase;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -95,7 +98,16 @@ public class ContaDAO {
         cursor.close();
         return valorTotal;
     }
- }
+
+    public void apagarContasCliente(int clienteId) {
+        try {
+            write.delete(DBHelper.TB_CONTA, "idCliente = ?", new String[]{String.valueOf(clienteId)});
+        } catch (Exception e) {
+            Log.i("ERROR", "Erro ao apagar as CONTAS do cliente: " + e.getMessage());
+        }
+    }
+
+}
 
 
 

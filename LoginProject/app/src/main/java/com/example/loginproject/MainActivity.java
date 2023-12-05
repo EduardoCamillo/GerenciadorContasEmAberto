@@ -1,5 +1,7 @@
 package com.example.loginproject;
 
+import static java.lang.reflect.Array.getInt;
+
 import androidx.activity.result.ActivityResultLauncher;
 
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
     private LinkedList<Fragment> fragments;
     private String currentLocalidade;
     private String currentCliente;
+
+    private int currentLocalidadeId;
 
     ActivityResultLauncher<Intent> someActivityResultLauncher;
 
@@ -232,6 +236,7 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
 
             args.putString("nome_localidade", localidade.getNome_localidade());
             currentLocalidade = localidade.getNome_localidade();
+            currentLocalidadeId = localidade.getId();
 
 
 
@@ -298,5 +303,6 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
     public void updateList() {
         adapterLocalidade2.setLocalidadeList(localidadeDAO.getListLocalidade());
         adapterLocalidade2.notifyDataSetChanged();
+
     }
 }
