@@ -1,5 +1,6 @@
 package com.example.loginproject;
 
+import static android.app.PendingIntent.getActivity;
 import static java.lang.reflect.Array.getInt;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -8,6 +9,8 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.Activity;
@@ -15,6 +18,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,8 +42,8 @@ import java.util.LinkedList;
 
 public class MainActivity extends AppCompatActivity implements AdapterClickListener {
 
-    private final int TYPE_CLIENTE = 0;
-    private final int TYPE_LOCALIDADE = 1;
+    private final int TYPE_CLIENTE = 1;
+    private final int TYPE_LOCALIDADE = 0;
     private final int TYPE_CONTAS = 2;
 
     private AdapterLocalidade adapterLocalidade;
@@ -89,12 +93,8 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
                         updateList();
                     }
                 });
-
-
         //configRecyclerViewSwipe();
-
         configMediaList();
-
     }
 
     private void configMediaList() {
@@ -138,9 +138,8 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
     }
 
     public void updateToolbar(int type){
-
         if(type == TYPE_CLIENTE){
-            toolbar.setTitle("Clientes" + (currentLocalidade != null ? " da " + currentLocalidade : ""));
+            toolbar.setTitle("Clientes" + (currentLocalidade != null ? " do " + currentLocalidade : ""));
             return;
         }
 
@@ -154,6 +153,7 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
     }
 
     @Override
+    //para o item de adição nos fragmentos
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int idMenu = item.getItemId();
 
@@ -166,12 +166,14 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
                 Intent intent = new Intent(this, FormClienteActivity.class);
                 intent.putExtra("localidadeId", clientesFragments.getLocalidadeId());
                 someActivityResultLauncher.launch(intent);
+
             }else if(currentFragment instanceof ContasFragment){
                 ContasFragment contasFragment = (ContasFragment) currentFragment;
 
                 Intent intent = new Intent(this, FormContaActivity.class);
                 intent.putExtra("clienteId",contasFragment.getClienteId());
                 someActivityResultLauncher.launch(intent);
+
             }
             else {
                 someActivityResultLauncher.launch(new Intent(this, FormLocalidadeActivity.class));
@@ -201,9 +203,9 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
 
-        if(fragments.size() > 0){
+        if(fragments.size() > 1){
+
             Fragment fragment  = fragments.peekLast();
 
             if(fragment instanceof ClientesFragments){
@@ -215,7 +217,9 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
                 fragments.removeLast();
                 updateToolbar(TYPE_CLIENTE);
             }
+
         }
+        super.onBackPressed();
     }
 
     @Override
@@ -223,9 +227,6 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
         if(object instanceof Localidade){
             Localidade localidade = (Localidade) object;
 
-            //Intent intent = new Intent(this, FormLocalidadeActivity.class);
-
-            Toast.makeText(getApplicationContext(), "Selecionado: " + localidade.getNome_localidade(),Toast.LENGTH_SHORT).show();
             // Cria um objeto do fragmento para exibir os clientes da localidade
             ClientesFragments clientesFragments  = new ClientesFragments();
             //passando o id da localidade como argumento
@@ -243,66 +244,44 @@ public class MainActivity extends AppCompatActivity implements AdapterClickListe
             //substituindo o fragmento atual pelo fragmento de clientes
             addFragment(clientesFragments);
 
-            if(object instanceof Cliente){
-                // Executa ação do click de cliente
-                Cliente cliente = (Cliente) object;
 
-                //Intent intent = new Intent(this, FormLocalidadeActivity.class);
-
-                Toast.makeText(getApplicationContext(), "Selecionado: " + cliente.getNome_cliente(),Toast.LENGTH_SHORT).show();
-                // Cria um objeto do fragmento para exibir as contas do cliente
-                ContasFragment contasFragment  = new ContasFragment();
-                //passando o id da localidade como argumento
-                 args = new Bundle();
-                args.putInt("cliente_id", cliente.getId());
-                contasFragment.setArguments(args);
-                contasFragment.setAdapterClickListener(this);
-
-                args.putString("nome_cliente", cliente.getNome_cliente());
-                currentCliente = cliente.getNomeCliente();
-
-
-
-                //substituindo o fragmento atual pelo fragmento de contas
-                addFragment(contasFragment);
-
-                //intent.putExtra("localidade", localidade);
-                //startActivity(intent);
-            }
             //intent.putExtra("localidade", localidade);
-            //startActivity(intent);
-            return;
+            //startActivity(intent);;
         }
-
         if(object instanceof Cliente){
+            Bundle args = new Bundle();
             // Executa ação do click de cliente
             Cliente cliente = (Cliente) object;
 
-            //Intent intent = new Intent(this, FormLocalidadeActivity.class);
 
-            Toast.makeText(getApplicationContext(), "Selecionado: " + cliente.getNome_cliente(),Toast.LENGTH_SHORT).show();
             // Cria um objeto do fragmento para exibir as contas do cliente
             ContasFragment contasFragment  = new ContasFragment();
             //passando o id da localidade como argumento
-            Bundle args = new Bundle();
+            args = new Bundle();
             args.putInt("cliente_id", cliente.getId());
             contasFragment.setArguments(args);
             contasFragment.setAdapterClickListener(this);
 
+            args.putString("nome_cliente", cliente.getNome_cliente());
+            currentCliente = cliente.getNomeCliente();
 
-
-            //substituindo o fragmento atual pelo fragmento de contas
             addFragment(contasFragment);
 
-            //intent.putExtra("localidade", localidade);
-            //startActivity(intent);
+
         }
+
+
 
     }
 
     public void updateList() {
         adapterLocalidade2.setLocalidadeList(localidadeDAO.getListLocalidade());
         adapterLocalidade2.notifyDataSetChanged();
+
+    }
+    public void updateListClient(Localidade localidade) {
+        adapterCliente.setClienteList(clienteDAO1.getClientesDaLocalidade(localidade.id));
+        adapterCliente.notifyDataSetChanged();
 
     }
 }

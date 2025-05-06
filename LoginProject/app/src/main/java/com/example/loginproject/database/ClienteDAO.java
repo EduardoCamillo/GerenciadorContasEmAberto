@@ -41,29 +41,6 @@ public class ClienteDAO {
 
     }
 
-    /*public List<Cliente> getListCliente() {
-        List<Cliente> clienteList = new ArrayList<>();
-
-        String sql = "SELECT * FROM " + DBHelper.TB_CLIENTE + ";";
-
-        Cursor c = read.rawQuery(sql, null);
-
-
-        while (c.moveToNext()) {
-
-            int id = c.getInt(c.getColumnIndex("id"));
-            String nome = c.getString(c.getColumnIndex("nome"));
-
-            Cliente cliente = new Cliente();
-
-            cliente.setId(id);
-            cliente.setNome_cliente(nome);
-
-            clienteList.add(cliente);
-        }
-        c.close();
-        return clienteList;
-        }*/
 
     public List<Cliente> getClientesDaLocalidade(int localidadeId) {
         List<Cliente> listaDeClientes = new ArrayList<>();

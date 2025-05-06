@@ -43,20 +43,6 @@ public class AdapterConta extends RecyclerView.Adapter<AdapterConta.MyViewHolder
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy ", Locale.getDefault());
         String dataFormatada = dateFormat.format(contas.getData());
         holder.data_compra.setText(dataFormatada);
-        // Configurar a data atual para o campo data_compra
-        //SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
-        //String dataFormatada = dateFormat.    format(contas.getDataString());
-        //holder.data_compra.setText(dataFormatada);
-        /*
-        Date data = contas.getData();
-        if (data != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-            String dataFormatada = dateFormat.format(data);
-            holder.data_compra.setText(dataFormatada);
-        } else {
-            holder.data_compra.setText("Data Inválida"); // Ou outra ação apropriada em caso de data inválida
-        }
-        */
 
         // Configurar um clique no item do RecyclerView
         holder.itemView.setOnLongClickListener(view -> {

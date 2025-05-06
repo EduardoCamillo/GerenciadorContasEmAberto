@@ -43,11 +43,7 @@ public class ClientesAdapter extends RecyclerView.Adapter<ClientesAdapter.MyView
         holder.nome_cliente.setText(cliente.getNomeCliente());
 
         // Configurar um clique no item do RecyclerView
-        holder.itemView.setOnClickListener(view -> {
-            if (onClick != null) {
-                onClick.onItemClicked(cliente);
-            }
-        });
+        holder.itemView.setOnClickListener(view ->  onClick.onItemClicked(cliente));
     }
 
     @Override
