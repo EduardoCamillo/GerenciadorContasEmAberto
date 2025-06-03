@@ -16,6 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TB_CLIENTE = "TB_CLIENTE";
 
     public static final String TB_CONTA = "TB_CONTA";
+    public static final String TB_PRODUTO = "TB_PRODUTO";
 
     public String sqlLocalidade = "CREATE TABLE IF NOT EXISTS " + TB_LOCALIDADE
             + " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -34,6 +35,12 @@ public class DBHelper extends SQLiteOpenHelper {
             "idCliente INTEGER, " +
             "FOREIGN KEY (idCliente) REFERENCES " + TB_CLIENTE + "(ID)); ";
 
+    public String sqlProduto = "CREATE TABLE IF NOT EXISTS " + TB_PRODUTO +
+            "(id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            "nome TEXT NOT NULL, " +
+            "valor VARCHAR NOT NULL);";
+
+
     public DBHelper(Context context) {
         super(context, NOME_DB, null, VERSAO);
     }
@@ -45,6 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
             sqLiteDatabase.execSQL(sqlLocalidade);
             sqLiteDatabase.execSQL(sqlCliente);
             sqLiteDatabase.execSQL(sqlConta);
+            sqLiteDatabase.execSQL(sqlProduto);
         }catch(Exception e){
             Log.i("ERRADO", "Deu ruim ao criar a tabela duzao");
         }
@@ -57,8 +65,9 @@ public class DBHelper extends SQLiteOpenHelper {
             sqLiteDatabase.execSQL(sqlLocalidade);
             sqLiteDatabase.execSQL(sqlCliente);
             sqLiteDatabase.execSQL(sqlConta);
+            sqLiteDatabase.execSQL(sqlProduto);
         }catch(Exception e){
-            Log.i("ERRADO", "Deu ruim ao criar a tabela duzao");
+            Log.i("ERRADO", "Deu ruim ao ATUALIZAR a tabela duzao");
         }
     }
 }

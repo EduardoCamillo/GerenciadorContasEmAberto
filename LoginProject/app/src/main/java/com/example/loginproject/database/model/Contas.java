@@ -44,18 +44,6 @@ public class Contas extends Cliente {
     public void setData(Date data){
         this.data = data;
     }
-    public String getDataString(){
-        return dataString;
-    }
 
-    public void setDataString(String dataString) {
-        if (dataString != null) {
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                this.data = sdf.parse(dataString);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+
 }
